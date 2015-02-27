@@ -28,6 +28,7 @@ public:
 	void removeVertex(int);		// удалить вершину
 	void removeEdge(int, int);	// удалить дугу
 	int indegree(int);			// полустепень захода
+	void scan(wchar_t* fileName);
 
 protected:
     vector<Vertex*> vertexList;

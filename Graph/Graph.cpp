@@ -1,5 +1,7 @@
 #include "Graph.h"
 #include <iostream>
+#include <fstream>
+#include <sstream>
 #include <string>
 
 using namespace std;
@@ -138,4 +140,30 @@ int Graph::indegree(int id) {
 	catch (Exeption e) {
 		e.print();
 	}
+}
+
+void Graph::scan(wchar_t* fileName) {
+	std::ifstream in;
+	in.open(fileName);
+
+	if (in.is_open()) {
+		 int i;
+		 std::string str;
+		 getline(in, str);
+		 std::stringstream s(str);
+		 while(s >> i) {
+			 addVertex(i);
+		 }
+
+		 getline(in, str);
+		 int from, to, weight;
+		 while(in) {
+			std::stringstream s2(str);
+			while (s2 >> from >> to >> weight) {
+				 addEdge(from, to, weight); 
+			}
+			getline(in, str);
+		 }
+	}
+
 }

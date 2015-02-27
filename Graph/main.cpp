@@ -44,27 +44,9 @@ int main() {
 	graph2.removeVertex(7);
 	cout << "After removing:" << endl;
 	graph2.show();*/
-
-	/*std::ifstream in;
-	in.open("input.txt");
-	if (in.is_open()) {
-		 lines.Clear();
-		 unit(T);
-		 std::string str;
-		 getline(in, str);
-		 while (in) {
-			 if(str.find_first_not_of(" \t\r\n") != std::string::npos
-				 && str[0] != '#') {
-					 std::stringstream s(str);
-					 line l;
-					 s >> l.start.x >> l.start.y >> l.end.x >> l.end.y;
-					 std::string linename;
-					 s >> linename;
-					 l.name = gcnew String(linename.c_str());
-					 lines.Add(l);
-			 }
-			 getline(in, str);
-		 }
-	}*/
+	Graph graph;
+	
+	graph.scan("input.txt");
+	graph.show();
 	return 0;
 }
