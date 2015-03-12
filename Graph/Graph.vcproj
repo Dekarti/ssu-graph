@@ -192,6 +192,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Tasks.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Vertex.h"
 				>
 			</File>
@@ -203,6 +207,14 @@
 			>
 			<File
 				RelativePath=".\input.txt"
+				>
+			</File>
+			<File
+				RelativePath=".\input1.txt"
+				>
+			</File>
+			<File
+				RelativePath=".\input2.txt"
 				>
 			</File>
 			<File
