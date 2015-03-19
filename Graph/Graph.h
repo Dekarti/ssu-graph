@@ -19,19 +19,21 @@ struct Exeption {
 class Graph {
 public:
     Graph() { };
-	bool exists(int);			 		// проверить на наличие вершины в графе
-    void addVertex(int);		 		// добавить вершину 
-    void addEdge(int, int, int); 		// добавить дугу
-    int getWeight(int, int);	 		// получить вес ребра
-    int size();					 		// размерность графа
-    void show();				 		// отобразить граф
-	Vertex* getVertex(int);		 		// доступ к вершине по имени
-    Vertex* operator[](int);	 		// доступ к вершине по имени
-	void removeVertex(int);		 		// удалить вершину
-	void removeEdge(int, int);	 		// удалить дугу
-	int indegree(int);			 		// полустепень захода
-	void scan(string fileName);  		// считать граф из файла
-	vector<Vertex*> vertices();		// возвращает список смежности
+	bool exists(int id);			 					// проверить на наличие вершины в графе
+    void addVertex(int id);		 						// добавить вершину 
+    void addEdge(int from, int to, int weight); 		// добавить дугу
+    int getWeight(int from, int to);			 		// получить вес ребра
+    int size();									 		// размерность графа
+    void show();								 		// отобразить граф
+	Vertex* getVertex(int id);		 					// доступ к вершине по имени
+    Vertex* operator[](int id);	 						// доступ к вершине по имени
+	void removeVertex(int removable_id);		 		// удалить вершину
+	void removeEdge(int from_, int to_);		 		// удалить дугу
+	int indegree(int id);						 		// полустепень захода
+	void scan(string fileName);					  		// считать граф из файла
+	vector<Vertex*> vertices();						    // возвращает список смежности
+	void Graph::dfs(int i, vector<bool> &used);			// обход графа в глубину
+	bool isConnected();									// проверка графа на связность
 
 protected:
     vector<Vertex*> vertexList;
