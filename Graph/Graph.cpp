@@ -198,12 +198,11 @@ vector<Vertex*> Graph::vertices() {
 }
 
 void Graph::dfs(int i, vector<bool> &used) {
-    cout << vertexList[i]->index << endl;
     used[i] = true;
     map<Vertex*, int>::const_iterator iter;
     for(map<Vertex*, int>::iterator it = vertexList[i]->adjMap.begin();
-        it != vertexList[i]->adjMap.end();
-        it++) {
+									it != vertexList[i]->adjMap.end();
+									it ++) {
         if (!used[it->first->index]) {
             dfs(it->first->index, used);
         }
@@ -211,9 +210,17 @@ void Graph::dfs(int i, vector<bool> &used) {
 }
 
 bool Graph::isConnected() {
-    vector<bool> used(vertexList.size() * 2);
-    dfs(0, used);
-    return (used == vector<bool>(vertexList.size(), true));
+	bool isConnected;
+    vector<bool> used(vertexList.size(), 0);
+	for (int i = 0; i < vertexList.size(); i++) {
+		used.assign(used.size(), 0);
+		dfs(vertexList[i]->index, used);
+		for (int j = 0; j < used.size(); j++) {
+			if(used[vertexList[j]->index] == false)
+				return false;
+		}
+	}
+    return true;
 }
 
 Graph intersection(Graph graph1, Graph graph2) {

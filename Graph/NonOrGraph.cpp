@@ -37,3 +37,9 @@ void NonOrGraph::removeEdge(int betweens_one, int betweens_two) {
 		e.print();
 	}
 }
+
+bool NonOrGraph::isConnected() {
+    vector<bool> used(vertexList.size() * 2);
+    dfs(0, used);
+    return (used == vector<bool>(vertexList.size(), true));
+}

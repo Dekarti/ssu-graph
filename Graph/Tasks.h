@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include <vector>
 #include "Graph.h"
 #include "Vertex.h"
 
@@ -48,3 +49,19 @@ void task3_6() {
 	Graph graph3 = intersection(graph1, graph2);
 	graph3.show();
 }
+
+// Выяснить, является ли орграф сильно связным.
+void task4_14() {
+	Graph graph;
+	//graph.scan("task4_14.txt");
+	cout << ((graph.isConnected())? "Yes\n" : "No\n");
+	/*graph.addEdge(1, 3, 0);
+	graph.removeEdge(2, 3);
+	graph.addEdge(2, 1, 0);
+	graph.addVertex(4);*/
+	cout << ((graph.isConnected())? "Yes\n" : "No\n");
+}
+
+// Проверить, можно ли из графа удалить какую-либо вершину так,
+// чтобы получилось дерево.
+void task5_21() {}
