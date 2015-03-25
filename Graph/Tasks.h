@@ -64,4 +64,16 @@ void task4_14() {
 
 // ѕроверить, можно ли из графа удалить какую-либо вершину так,
 // чтобы получилось дерево.
-void task5_21() {}
+void task5_21() {
+	NonOrGraph graph;
+	bool foo = false;
+	graph.scan("task5_21.txt");
+	for (int i = 0; i < graph.size(); i++) {
+		graph.removeVertex(graph.size() - i - 1);
+		if (graph.isTree()) {
+			foo = true;
+		}
+		graph.addVertex(graph.size() - i - 1);
+	}
+	cout << (foo ? "Yes\n" : "No\n");
+}

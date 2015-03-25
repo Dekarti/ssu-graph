@@ -12,7 +12,9 @@ int main() {
 
 	/*task1_3();
 	task2_25();
-	task3_6();*/
-	task4_14();
+	task3_6();
+	task4_14();*/
+	task5_21();
+
 	return 0;
 }

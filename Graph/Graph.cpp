@@ -223,6 +223,18 @@ bool Graph::isConnected() {
     return true;
 }
 
+int Graph::edgesNumber() {
+	int edgesCounter = 0;
+	for (int i = 0; i < size(); i++) {
+		edgesCounter += vertexList[i]->adjMap.size();
+	}
+	return edgesCounter;
+}
+
+bool Graph::isTree() {
+	return isConnected() && (edgesNumber() == vertexList.size() - 1);
+}
+
 Graph intersection(Graph graph1, Graph graph2) {
 	vector<Vertex*> graph1List = graph1.vertices(),
 					graph2List = graph2.vertices();
@@ -256,3 +268,4 @@ Graph intersection(Graph graph1, Graph graph2) {
 	}
 	return graph1;
 }
+

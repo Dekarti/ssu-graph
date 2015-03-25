@@ -6,4 +6,5 @@ public:
 	void addEdge(int, int, int);
 	void removeEdge(int, int);
 	bool isConnected();
+	bool isTree();
 };

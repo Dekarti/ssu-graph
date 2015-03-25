@@ -34,6 +34,8 @@ public:
 	vector<Vertex*> vertices();						    // возвращает список смежности
 	void Graph::dfs(int i, vector<bool> &used);			// обход графа в глубину
 	bool isConnected();									// проверка графа на связность
+	int edgesNumber();									// количество ребер
+	bool isTree();										// проверка является ли граф деревом
 
 protected:
     vector<Vertex*> vertexList;
