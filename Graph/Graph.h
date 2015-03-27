@@ -8,12 +8,10 @@
 using namespace std;
 
 struct Exeption {
-	Exeption(int reason, string message, int line, string func);
-	void print();
+	Exeption(int reason, string message);
+	void print(string file, int line, string func);
 	string message;
 	int reason;
-	string line;
-	string func;
 };
 
 class Graph {

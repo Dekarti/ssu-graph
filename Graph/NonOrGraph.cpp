@@ -1,6 +1,6 @@
 #include "NonOrGraph.h"
 
-#define EXEPTION(reason, message) Exeption((reason), (message), __LINE__, __FUNCSIG__)
+#define PRINT_EXEPTION() print(__FILE__, __LINE__, __FUNCTION__)
 
 void NonOrGraph::addEdge(int betweens_one, int betweens_two, int weight) {
 	Vertex* betweensOne;
@@ -30,11 +30,11 @@ void NonOrGraph::removeEdge(int betweens_one, int betweens_two) {
 			betweensTwo->breakEdge(betweensOne);
 		}
 		else {
-			throw EXEPTION(betweens_one, "vertex is not adjacent to this");
+			throw Exeption(betweens_one, "vertex is not adjacent to this");
 		}
 	}
 	catch (Exeption e) {
-		e.print();
+		e.PRINT_EXEPTION();
 	}
 }
 

@@ -79,36 +79,53 @@ void task5_21() {
 	cout << (foo ? "Yes\n" : "No\n");
 }
 
-void BFS(Graph &graph, int start, queue<int> &q, map<int, char> &used) {
+vector<int> BFS(Graph &graph, int start, queue<int> &q, map<int, char> &used) {
+	vector<int> cicle;
+	bool breakFlag = false;
 	q.push(start);
 	used[start] = 1;
 	while (!q.empty()) {
 		int v = q.front();
 		q.pop();
 		
-		cout << v << " ";
+		cicle.push_back(v);
 		
 		for(map<Vertex*, int>::iterator it = graph[v]->adjMap.begin();
 										it != graph[v]->adjMap.end();
 										it ++) {
 			int to = it->first->index;
-
+			if (to == start) {
+				cicle.push_back(to);
+				breakFlag = true;
+				break;
+			}
 			if (used[to] == 0) {
 				used[to] = 1;
 				q.push(to);
 			}
 		}
+		if (breakFlag)
+			break;
 	}
+	return cicle;
 }
 
 // Найти все кратчайшие циклы орграфа
 void task6_32() {
 	Graph graph;
 	graph.scan("task6_32.txt");
-	queue<int> q;
-	map<int, char> used;
+	vector<Vertex*> vertices = graph.vertices();
+
 	for (int i = 0; i < graph.size(); i++) {
-		used.insert(make_pair(graph[i]->index, 0));
+		queue<int> q;
+		map<int, char> used;
+		for (int i = 0; i < graph.size(); i++) {
+			used.insert(make_pair(vertices[i]->index, 0));
+		}
+		vector<int> cicle = BFS(graph, vertices[i]->index, q, used);
+		for (int j = 0; j < cicle.size(); j++) {
+			cout << cicle[j] << " ";
+		}
+		cout << endl;
 	}
-	BFS(graph, 1, q, used);
 }

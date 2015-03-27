@@ -7,23 +7,24 @@
 #include <set>
 #include <algorithm>
 
-#define EXEPTION(reason, message) Exeption((reason), (message), __LINE__, __FUNCSIG__)
+#define PRINT_EXEPTION() print(__FILE__, __LINE__, __FUNCTION__)
 
 using namespace std;
 
-/*------------------- EXEPTION DEFINING --------------------*/
+/*------------------- Exeption DEFINING --------------------*/
 
-Exeption::Exeption(int reason, string message, int line, string funcsig) {
+Exeption::Exeption(int reason, string message) {
 	this->reason = reason;
 	this->message = message;
-	this->line = line;
-	this->func = funcsig;
 }
 
-void Exeption::print() {
-	cout << "EXEPTION: " << message << " | "
-		 << reason << " | " << line << " | "
-		 << func   << endl  << endl;
+void Exeption::print(string file, int line, string func) {
+	cout << "EXEPTION: "    << message << endl 
+		 << "  Reason elem: " << reason  << endl
+		 << "  File: "		  << file	 << endl
+		 << "  Line: "        << line    << endl 
+		 << "  Function: "    << func    << endl
+		 << endl;
 }
 
 /*-------------------- GRAPH DEFINING -----------------------*/
@@ -46,7 +47,7 @@ Vertex* Graph::getVertex(int id) {
 			return vertexList[i];
 		}
 		else if (i == size() - 1) { 
-			throw EXEPTION(id, "no such element");
+			throw Exeption(id, "no such element");
 		}
 		else {
 			i++;
@@ -59,7 +60,7 @@ Vertex* Graph::operator [](int id) {
 		return getVertex(id);
 	}
 	catch (Exeption e) {
-		e.print();
+		e.PRINT_EXEPTION();
 	}
 }
 
@@ -81,13 +82,13 @@ void Graph::addEdge(int from, int to, int weight) {
 					vertexFrom->adjMap.insert(pair<Vertex*, int>(vertexTo, weight));
 				}
 				else {
-					throw EXEPTION(0, "edge between given vertices already exists");
+					throw Exeption(0, "edge between given vertices already exists");
 				}
 			}
 		}
 	}
 	catch (Exeption e) {
-		e.print();
+		e.PRINT_EXEPTION();
 	}
 }
 
@@ -96,7 +97,7 @@ int Graph::getWeight(int from, int to) {
 		return getVertex(from)->adjMap[getVertex(to)];
 	}
 	catch (Exeption e) {
-		e.print();
+		e.PRINT_EXEPTION();
 	}
 }
 
@@ -126,7 +127,7 @@ void Graph::removeVertex(int removable_id) {
 			vertexList.erase(vertexList.begin() + id);
 	}
 	catch (Exeption e) {
-		e.print();
+		e.PRINT_EXEPTION();
 	}
 }
 
@@ -140,11 +141,11 @@ void Graph::removeEdge(int from_, int to_) {
 			from->breakEdge(to);
 		}
 		else {
-			throw EXEPTION(to_, "vertex is not adjacent to this");
+			throw Exeption(to_, "vertex is not adjacent to this");
 		}
 	}
 	catch (Exeption e) {
-		e.print();
+		e.PRINT_EXEPTION();
 	}
 }
 
@@ -159,7 +160,7 @@ int Graph::indegree(int id) {
 		return indegree;
 	}
 	catch (Exeption e) {
-		e.print();
+		e.PRINT_EXEPTION();
 	}
 }
 
