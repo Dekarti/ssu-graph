@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include <queue>
 #include "Graph.h"
 #include "Vertex.h"
 
@@ -78,70 +79,36 @@ void task5_21() {
 	cout << (foo ? "Yes\n" : "No\n");
 }
 
-/*int cycle_st, cycle_end;
-
-bool dfs (Graph &graph, int v, map<int, char> &used, map<int, char> &color) {
-		color[v] = 1;
+void BFS(Graph &graph, int start, queue<int> &q, map<int, char> &used) {
+	q.push(start);
+	used[start] = 1;
+	while (!q.empty()) {
+		int v = q.front();
+		q.pop();
+		
+		cout << v << " ";
+		
 		for(map<Vertex*, int>::iterator it = graph[v]->adjMap.begin();
 										it != graph[v]->adjMap.end();
 										it ++) {
 			int to = it->first->index;
-			if (color[to] == 0) {
-				used[to] = v;
-				if (dfs (graph, to, used, color))
-					return true;
-			}
-			else if (color[to] == 1) {
-				cycle_end = v;
-				cycle_st = to;
-				return true;
-			}
-		}
-		color[v] = 2;
-		return false;
-}*/
 
-bool DFS(Graph &graph, int id, map<int, char> &color, vector<int> &p) {
-	p.push_back(id);
-	color.insert(make_pair(id, 1));
-	for(map<Vertex*, int>::iterator it = graph[id]->adjMap.begin();
-									it != graph[id]->adjMap.end();
-									it++) {
-		if (color[it->first->index] == 1) {
-			return false;
+			if (used[to] == 0) {
+				used[to] = 1;
+				q.push(to);
+			}
 		}
-		else if (color[it->first->index] == 0 && DFS(graph, id, color, p)) {
-			return true;
-		} 
 	}
-	color[id] = 2;
-	return true;
 }
 
 // Найти все кратчайшие циклы орграфа
 void task6_32() {
 	Graph graph;
-	graph.scan("task6_32");
-	map<int, char> color;
-	vector<int> p;
+	graph.scan("task6_32.txt");
+	queue<int> q;
+	map<int, char> used;
 	for (int i = 0; i < graph.size(); i++) {
-		color.insert(make_pair(graph[i]->index, '0'));
+		used.insert(make_pair(graph[i]->index, 0));
 	}
-
-	DFS(graph, 1, color, p);
-
-	for (int i = 0; i < p.size(); i++) {
-		cout << p[i] << " ";
-	}
-
-
-
-	/*vector<int> cycle;
-	cycle.push_back(cycle_st);
-	for (int v = cycle_end; v != cycle_st; v = used[v])
-		cycle.push_back(v);
-	cycle.push_back(cycle_st);
-	reverse(cycle.begin(), cycle.end());
-	for (size_t i = 0; i < cycle.size(); ++i)
-		cout << cycle[i] + 1 << " ";*/
+	BFS(graph, 1, q, used);
 }
