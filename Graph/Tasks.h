@@ -79,35 +79,35 @@ void task5_21() {
 	cout << (foo ? "Yes\n" : "No\n");
 }
 
-vector<int> BFS(Graph &graph, int start, queue<int> &q, map<int, char> &used) {
+map<int, int> BFS(Graph &graph, int start, queue<int> &q, map<int, char> &used) {
 	vector<int> cicle;
+	map<int, int> parents;
 	bool breakFlag = false;
 	q.push(start);
 	used[start] = 1;
+	parents.insert(make_pair(start, -1));
 	while (!q.empty()) {
 		int v = q.front();
 		q.pop();
-		
-		cicle.push_back(v);
-		
 		for(map<Vertex*, int>::iterator it = graph[v]->adjMap.begin();
 										it != graph[v]->adjMap.end();
 										it ++) {
 			int to = it->first->index;
 			if (to == start) {
-				cicle.push_back(to);
+				parents[to] = v;
 				breakFlag = true;
 				break;
 			}
 			if (used[to] == 0) {
 				used[to] = 1;
 				q.push(to);
+				parents.insert(make_pair(to, v));
 			}
 		}
 		if (breakFlag)
 			break;
 	}
-	return cicle;
+	return parents;
 }
 
 // Найти все кратчайшие циклы орграфа
@@ -122,9 +122,15 @@ void task6_32() {
 		for (int i = 0; i < graph.size(); i++) {
 			used.insert(make_pair(vertices[i]->index, 0));
 		}
-		vector<int> cicle = BFS(graph, vertices[i]->index, q, used);
-		for (int j = 0; j < cicle.size(); j++) {
-			cout << cicle[j] << " ";
+		map<int, int> parents = BFS(graph, vertices[i]->index, q, used);
+		/*for (map<int, int>::iterator it = cicle.begin(); it != cicle.end(); it++) {
+			cout << it->first << ":" << it->second << "   ";
+			//cout << v << " " << cicle[v];
+		}*/
+		int v = vertices[i]->index;
+		while (parents[v] != vertices[i]->index) {
+			cout << parents[v] << v;
+			v = parents[v];
 		}
 		cout << endl;
 	}
