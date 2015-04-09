@@ -7,9 +7,10 @@
 
 using namespace std;
 
-
-// Найти полустепень захода данной вершины орграфа 
-void task1_3() {
+/*
+ * Найти полустепень захода данной вершины орграфа 
+ */
+void taskIa_3() {
 	Graph graph;
 	cout << "Task 3: " << endl << endl;
 	graph.scan("input.txt");
@@ -24,8 +25,10 @@ void task1_3() {
 		 << endl;
 }
 
-// Удалить из графа данную вершину
-void task2_25() {
+/*
+ * Удалить из графа данную вершину
+ */
+void taskIa_25() {
 	cout << endl << "Task 25: "
 		 << endl << endl;
 
@@ -42,17 +45,21 @@ void task2_25() {
 	graph.show();
 }
 
-// Вывести список смежности орграфа,
-// являющегося пересечением двух заданных.
-void task3_6() {
+/*
+ * Вывести список смежности орграфа,
+ * являющегося пересечением двух заданных.
+ */
+void taskIb_6() {
 	Graph graph1; graph1.scan("input1.txt");
 	Graph graph2; graph2.scan("input2.txt");
 	Graph graph3 = intersection(graph1, graph2);
 	graph3.show();
 }
 
-// Выяснить, является ли орграф сильно связным.
-void task4_14() {
+/*
+ * Выяснить, является ли орграф сильно связным.
+ */
+void taskII_14() {
 	Graph graph;
 	//graph.scan("task4_14.txt");
 	cout << ((graph.isConnected())? "Yes\n" : "No\n");
@@ -63,9 +70,11 @@ void task4_14() {
 	cout << ((graph.isConnected())? "Yes\n" : "No\n");
 }
 
-// Проверить, можно ли из графа удалить какую-либо вершину так,
-// чтобы получилось дерево.
-void task5_21() {
+/*
+ * Проверить, можно ли из графа удалить
+ * какую-либо вершину так, чтобы получилось дерево.
+ */
+void taskII_21() {
 	NonOrGraph graph;
 	bool foo = false;
 	graph.scan("task5_21.txt");
@@ -110,8 +119,10 @@ map<int, int> BFS(Graph &graph, int start, queue<int> &q, map<int, char> &used) 
 	return parents;
 }
 
-// Найти все кратчайшие циклы орграфа
-void task6_32() {
+/*
+ * Найти все кратчайшие циклы орграфа
+ */
+void taskII_32() {
 	Graph graph;
 	graph.scan("task6_32.txt");
 	vector<Vertex*> vertices = graph.vertices();
@@ -123,15 +134,52 @@ void task6_32() {
 			used.insert(make_pair(vertices[i]->index, 0));
 		}
 		map<int, int> parents = BFS(graph, vertices[i]->index, q, used);
-		/*for (map<int, int>::iterator it = cicle.begin(); it != cicle.end(); it++) {
-			cout << it->first << ":" << it->second << "   ";
-			//cout << v << " " << cicle[v];
-		}*/
-		int v = vertices[i]->index;
-		while (parents[v] != vertices[i]->index) {
-			cout << parents[v] << v;
+
+		vector<int> cicle;
+		int v = parents[vertices[i]->index];
+		cicle.push_back(vertices[i]->index);
+		while (v != vertices[i]->index) {
+			cicle.push_back(v);
 			v = parents[v];
 		}
+		cicle.push_back(vertices[i]->index);
+		for (int i = cicle.size() - 1; i >= 0; i--)
+			cout << cicle[i] << (!i? "" : " -> ");
 		cout << endl;
 	}
 }
+
+/*
+ * Дан взвешенный неориентированный граф из N вершин и M ребер.
+ * Требуется найти в нем каркас минимального веса. Алгоритм Краскала.
+ */
+void taskIII() {}
+
+/*
+ * Эксцентриситет вершины - максимальное расстояние из всех минимальных
+ * расстояний от других вершин до данной вершины.
+ * Найти радиус графа - минимальный из эксцентриситетов его вершин.
+ *
+ *		a. В графе нет ребер отрицательного веса.
+ *
+ */
+void taskIV_11a() {}
+
+/*
+ * Вывести длины кратчайших путей от u до v1 и v2.
+ *
+ *		b. В графе нет циклов отрицательного веса.
+ *
+ */
+void taskIV_4b() {}
+
+/*
+ * Вывести кратчайший путь из вершины u до вершины v.
+ *
+ *		c. В графе могут быть циклы отрицательного веса.
+ *
+ */
+void taskIV_12c() {}
+
+
+

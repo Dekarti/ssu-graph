@@ -10,12 +10,12 @@ using namespace std;
 
 int main() {
 
-	/*task1_3();
-	task2_25();
-	task3_6();
-	task4_14();*/
-	//task5_21();
-	task6_32();
+	/*taskIa_3();
+	taskIa_25();
+	taskIb_6();
+	taskII_14();
+	taskII_21();*/
+	taskII_32();
 
 	return 0;
 }

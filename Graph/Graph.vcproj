@@ -206,19 +206,15 @@
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
 			>
 			<File
-				RelativePath=".\input.txt"
+				RelativePath=".\task4_14.txt"
 				>
 			</File>
 			<File
-				RelativePath=".\input1.txt"
+				RelativePath=".\task5_21.txt"
 				>
 			</File>
 			<File
-				RelativePath=".\input2.txt"
-				>
-			</File>
-			<File
-				RelativePath=".\output.txt"
+				RelativePath=".\task6_32.txt"
 				>
 			</File>
 		</Filter>
