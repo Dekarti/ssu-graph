@@ -217,6 +217,10 @@
 				RelativePath=".\task6_32.txt"
 				>
 			</File>
+			<File
+				RelativePath=".\taskIII.txt"
+				>
+			</File>
 		</Filter>
 	</Files>
 	<Globals>

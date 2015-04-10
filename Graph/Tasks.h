@@ -153,7 +153,25 @@ void taskII_32() {
  * Дан взвешенный неориентированный граф из N вершин и M ребер.
  * Требуется найти в нем каркас минимального веса. Алгоритм Краскала.
  */
-void taskIII() {}
+void taskIII() {
+	NonOrGraph graph;
+	graph.scan("taskIII.txt");
+	vector<Vertex*> vertices = graph.vertices();
+	vector <pair<int, pair<int, int>>> edges;
+
+	for (int i = 0; i < graph.size(); i++) {
+		for(map<Vertex*, int>::iterator it = graph[i]->adjMap.begin();
+										it != graph[i]->adjMap.end();
+										it ++) {
+			edges.push_back(make_pair(
+								
+							);
+		}
+	}
+	map<int, int> result;
+
+
+}
 
 /*
  * Эксцентриситет вершины - максимальное расстояние из всех минимальных
