@@ -30,7 +30,7 @@ public:
 	int indegree(int id);						 			// полустепень захода
 	void scan(string fileName);					  			// считать граф из файла
 	vector<Vertex*> vertices();								// возвращает список смежности
-	void dfs(int i, vector<bool> &used);					// обход графа в глубину
+	void dfs(int i, map<int, bool> &used);					// обход графа в глубину
 	void dfs(int i, vector<bool> &used, vector<char> cycle);// обход графа в глубину (цветные вершины)
 	void bfs(int i);										// обход графа в ширину
 	bool isConnected();										// проверка графа на связность

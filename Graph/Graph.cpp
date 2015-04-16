@@ -19,11 +19,11 @@ Exeption::Exeption(int reason, string message) {
 }
 
 void Exeption::print(string file, int line, string func) {
-	cout << "EXEPTION: "    << message << endl 
+	cout << "EXEPTION:      " << message << endl 
 		 << "  Reason elem: " << reason  << endl
-		 << "  File: "		  << file	 << endl
-		 << "  Line: "        << line    << endl 
-		 << "  Function: "    << func    << endl
+		 << "  File:        " << file	 << endl
+		 << "  Line:        " << line    << endl 
+		 << "  Function:    " << func    << endl
 		 << endl;
 }
 
@@ -165,6 +165,7 @@ int Graph::indegree(int id) {
 }
 
 void Graph::scan(string stringFileName) {
+	vertexList.clear();
 	wchar_t fileName[1024];
 	for (int i = 0; i < stringFileName.size(); i++) {
 		fileName[i] = stringFileName[i];
@@ -198,13 +199,15 @@ vector<Vertex*> Graph::vertices() {
 	return vertexList;
 }
 
-void Graph::dfs(int i, vector<bool> &used) {
+
+
+void Graph::dfs(int i, map<int, bool> &used) {
     used[i] = true;
-    map<Vertex*, int>::const_iterator iter;
-    for(map<Vertex*, int>::iterator it = vertexList[i]->adjMap.begin();
-									it != vertexList[i]->adjMap.end();
+	Vertex* curVertex = getVertex(i);
+	for(map<Vertex*, int>::iterator it =  curVertex->adjMap.begin();
+									it != curVertex->adjMap.end();
 									it ++) {
-        if (!used[it->first->index]) {
+        if (used[it->first->index] == false) {
             dfs(it->first->index, used);
         }
     }
@@ -212,11 +215,14 @@ void Graph::dfs(int i, vector<bool> &used) {
 
 bool Graph::isConnected() {
 	bool isConnected;
-    vector<bool> used(vertexList.size(), 0);
+    map<int, bool> used;
+	for (int j = 0; j < size(); j++) {
+		used[vertexList[j]->index] == false;
+	}
+
 	for (int i = 0; i < vertexList.size(); i++) {
-		used.assign(used.size(), 0);
 		dfs(vertexList[i]->index, used);
-		for (int j = 0; j < used.size(); j++) {
+		for (int j = 0; j < size(); j++) {
 			if(used[vertexList[j]->index] == false)
 				return false;
 		}

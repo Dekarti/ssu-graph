@@ -39,11 +39,20 @@ void NonOrGraph::removeEdge(int betweens_one, int betweens_two) {
 }
 
 bool NonOrGraph::isConnected() {
-    vector<bool> used(vertexList.size());
-    dfs(0, used);
-    return (used == vector<bool>(vertexList.size(), true));
+    map<int, bool> used;
+	for (int j = 0; j < vertexList.size(); j++) {
+		used[vertexList[j]->index] == false;
+	}
+
+	dfs(vertexList[0]->index, used);
+	for (int i = 0; i < vertexList.size(); i++) {
+		if (used[vertexList[i]->index] == false)
+			return false;
+	}
+	return true;
 }
 
 bool NonOrGraph::isTree() {
-	return isConnected() && (edgesNumber() == vertexList.size() - 1);
+	return isConnected()
+		&& (edgesNumber() == vertexList.size() - 1);
 }

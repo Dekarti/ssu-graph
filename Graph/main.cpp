@@ -13,9 +13,9 @@ int main() {
 	/*taskIa_3();
 	taskIa_25();
 	taskIb_6();
-	taskII_14();
-	taskII_21();*/
-	taskII_32();
+	taskII_14();*/
+	taskII_21();
+	//taskII_32();
 
 	return 0;
 }

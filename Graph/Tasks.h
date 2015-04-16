@@ -82,10 +82,14 @@ void taskII_21() {
 		graph.removeVertex(graph.size() - i - 1);
 		if (graph.isTree()) {
 			foo = true;
+			cout << "Yes" << endl;
 		}
-		graph.addVertex(graph.size() - i - 1);
+		else {
+			cout << "No" << endl;
+		}
+		graph.scan("task5_21.txt");
 	}
-	cout << (foo ? "Yes\n" : "No\n");
+	//cout << (foo ? "Yes\n" : "No\n");
 }
 
 map<int, int> BFS(Graph &graph, int start, queue<int> &q, map<int, char> &used) {
@@ -154,7 +158,7 @@ void taskII_32() {
  * Требуется найти в нем каркас минимального веса. Алгоритм Краскала.
  */
 void taskIII() {
-	NonOrGraph graph;
+	/*NonOrGraph graph;
 	graph.scan("taskIII.txt");
 	vector<Vertex*> vertices = graph.vertices();
 	vector <pair<int, pair<int, int>>> edges;
@@ -169,7 +173,7 @@ void taskIII() {
 		}
 	}
 	map<int, int> result;
-
+*/
 
 }
 
