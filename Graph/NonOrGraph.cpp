@@ -46,13 +46,50 @@ bool NonOrGraph::isConnected() {
 
 	dfs(vertexList[0]->index, used);
 	for (int i = 0; i < vertexList.size(); i++) {
-		if (used[vertexList[i]->index] == false)
+		if (used[vertexList[i]->index] == false) {
 			return false;
+		}
 	}
 	return true;
 }
 
 bool NonOrGraph::isTree() {
+	/*if (!isConnected())
+		cout << "Is not connected" << endl;
+	if (edgesNumber() != vertexList.size() - 1)
+		cout << "M <> N - 1";*/
 	return isConnected()
-		&& (edgesNumber() == vertexList.size() - 1);
+		&& (edgesNumber() / 2 == vertexList.size() - 1);
 }
+
+void NonOrGraph::scan(string stringFileName) {
+	vertexList.clear();
+	wchar_t fileName[1024];
+	for (int i = 0; i < stringFileName.size(); i++) {
+		fileName[i] = stringFileName[i];
+	}
+	fileName[stringFileName.size()] = '\0';
+	std::ifstream in;
+	in.open(fileName);
+
+	if (in.is_open()) {
+		int i;
+		std::string str;
+		getline(in, str);
+		std::stringstream s(str);
+		while(s >> i) {
+			addVertex(i);
+		}
+
+		getline(in, str);
+		int from, to, weight;
+		while(in) {
+			std::stringstream s2(str);
+			while (s2 >> from >> to >> weight) {
+				addEdge(from, to, weight); 
+			}
+			getline(in, str);
+		}
+	}
+}
+

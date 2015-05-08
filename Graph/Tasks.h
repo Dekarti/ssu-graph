@@ -77,9 +77,10 @@ void taskII_14() {
 void taskII_21() {
 	NonOrGraph graph;
 	bool foo = false;
-	graph.scan("task5_21.txt");
+	graph.scan("taskII_21.txt");
 	for (int i = 0; i < graph.size(); i++) {
-		graph.removeVertex(graph.size() - i - 1);
+		graph.removeVertex(i);
+		//graph.show();
 		if (graph.isTree()) {
 			foo = true;
 			cout << "Yes" << endl;
@@ -87,7 +88,7 @@ void taskII_21() {
 		else {
 			cout << "No" << endl;
 		}
-		graph.scan("task5_21.txt");
+		graph.scan("taskII_21.txt");
 	}
 	//cout << (foo ? "Yes\n" : "No\n");
 }
@@ -124,11 +125,11 @@ map<int, int> BFS(Graph &graph, int start, queue<int> &q, map<int, char> &used) 
 }
 
 /*
- * Найти все кратчайшие циклы орграфа
+ * Найти все кратчайшие циклы орграфа (not approved)
  */
 void taskII_32() {
 	Graph graph;
-	graph.scan("task6_32.txt");
+	graph.scan("taskII_32.txt");
 	vector<Vertex*> vertices = graph.vertices();
 
 	for (int i = 0; i < graph.size(); i++) {

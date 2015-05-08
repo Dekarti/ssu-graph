@@ -7,4 +7,5 @@ public:
 	void removeEdge(int, int);
 	bool isConnected();
 	bool isTree();
+	void scan(string fileName);
 };
