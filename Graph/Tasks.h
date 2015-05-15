@@ -190,22 +190,27 @@ void taskIII() {
 
 	NonOrGraph graph;
 	graph.scan("taskIII.txt");
+	graph.show();
 	vector<Vertex*> vertices = graph.vertices();
 	vector <pair<int, pair<int, int>>> edges;
 
 
 
 	for (int i = 0; i < graph.size(); i++) {
-		for(map<Vertex*, int>::iterator it = graph[i]->adjMap.begin();
-										it != graph[i]->adjMap.end();
+		for(map<Vertex*, int>::iterator it = vertices[i]->adjMap.begin();
+										it != vertices[i]->adjMap.end();
 										it ++) {
 			edges.push_back(make_pair(
-								
-							);
+					vertices[i]->index,
+					make_pair(it->first->index, it->second)
+				)
+			);
 		}
 	}
-	map<int, int> result;
 
+	for (int i = 0; i < edges.size(); i++) {
+		cout << edges[i].first << "-" << edges[i].second.first <<  " | " << edges[i].second.second << endl;
+	}
 }
 
 /*
