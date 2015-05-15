@@ -10,14 +10,24 @@ void Vertex::breakEdge(Vertex* vertex) {
 	}*/
 }
 
-void Vertex::print() {
+void Vertex::printOriented() {
     for(map<Vertex*, int>::iterator it = adjMap.begin();
 									it != adjMap.end();
 									it++) {
         cout << "  " << index << " --(" << it->second << ")-> " << it->first->index << endl;
     }
 	if (adjMap.size() == 0) 
-		cout << "  " << index << endl;
+		cout << "  " << index << " <isolated>" << endl;
+}
+
+void Vertex::printNonOriented() {
+    for(map<Vertex*, int>::iterator it = adjMap.begin();
+									it != adjMap.end();
+									it++) {
+        cout << "  " << index << " <-(" << it->second << ")-> " << it->first->index << endl;
+    }
+	if (adjMap.size() == 0) 
+		cout << "<isolated>" << index << endl;
 }
 
 bool Vertex::isConnected(int id) {

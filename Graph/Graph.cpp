@@ -104,7 +104,7 @@ int Graph::getWeight(int from, int to) {
 void Graph::show() {
 	cout << endl;
 	for (int i = 0; i < vertexList.size(); i++) {
-		vertexList[i]->print();
+		vertexList[i]->printOriented();
 		cout << endl;
 	}
 }

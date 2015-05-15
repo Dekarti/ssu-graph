@@ -3,20 +3,25 @@
 #define PRINT_EXEPTION() print(__FILE__, __LINE__, __FUNCTION__)
 
 void NonOrGraph::addEdge(int betweens_one, int betweens_two, int weight) {
+
 	Vertex* betweensOne;
 	Vertex* betweensTwo;
+
     for (int i = 0; i < vertexList.size(); i++) {
-        if (vertexList[i]->index == betweens_one)
+		if (vertexList[i]->index == betweens_one) {
             betweensOne = vertexList[i];
+		}
     }
 
 	for (int i = 0; i < vertexList.size(); i++) {
-        if (vertexList[i]->index == betweens_two)
+		if (vertexList[i]->index == betweens_two) {
             betweensTwo = vertexList[i];
+		}
     }
 
 	betweensOne->adjMap.insert(pair<Vertex*, int>(betweensTwo, weight));
 	betweensTwo->adjMap.insert(pair<Vertex*, int>(betweensOne, weight));
+
 }
 
 void NonOrGraph::removeEdge(int betweens_one, int betweens_two) {
@@ -59,7 +64,7 @@ bool NonOrGraph::isTree() {
 	if (edgesNumber() != vertexList.size() - 1)
 		cout << "M <> N - 1";*/
 	return isConnected()
-		&& (edgesNumber() / 2 == vertexList.size() - 1);
+		&& (edgesNumber() == vertexList.size() - 1);
 }
 
 void NonOrGraph::scan(string stringFileName) {
@@ -93,3 +98,35 @@ void NonOrGraph::scan(string stringFileName) {
 	}
 }
 
+void NonOrGraph::show() {
+
+	cout << endl;
+	map<int, char> used;
+	for (int i = 0; i < vertexList.size(); i++) {
+		if (vertexList[i]->adjMap.empty()) {
+			cout << vertexList[i]->index << " isolated";
+		}
+		for(map<Vertex*, int>::iterator it = vertexList[i]->adjMap.begin();
+										it != vertexList[i]->adjMap.end();
+										it++)
+		{
+			if (!used[it->first->index]) {
+				cout << vertexList[i]->index << " <--(" << it->second << ")--> " << it->first->index << endl;
+			}
+			used[it->first->index] = 1;
+		}
+	}
+	
+	cout << "\n\n";
+
+}
+
+int NonOrGraph::edgesNumber() {
+
+	int edgesCounter = 0;
+	for (int i = 0; i < size(); i++) {
+		edgesCounter += vertexList[i]->adjMap.size();
+	}
+	return edgesCounter / 2;
+
+}

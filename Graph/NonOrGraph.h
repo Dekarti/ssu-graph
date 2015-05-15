@@ -7,5 +7,7 @@ public:
 	void removeEdge(int, int);
 	bool isConnected();
 	bool isTree();
+	void show();
 	void scan(string fileName);
+	int edgesNumber();										// количество ребер
 };

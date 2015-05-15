@@ -78,6 +78,7 @@ void taskII_21() {
 	NonOrGraph graph;
 	bool foo = false;
 	graph.scan("taskII_21.txt");
+	graph.show();
 	for (int i = 0; i < graph.size(); i++) {
 		graph.removeVertex(i);
 		//graph.show();
@@ -124,13 +125,24 @@ map<int, int> BFS(Graph &graph, int start, queue<int> &q, map<int, char> &used) 
 	return parents;
 }
 
+bool isPermutation(vector<int> vec1tmp, vector<int> vec2tmp) {
+
+	std::sort(vec1tmp.begin(), vec1tmp.end());
+	std::sort(vec2tmp.begin(), vec2tmp.end());
+
+	return (vec1tmp == vec2tmp);
+
+}
+
 /*
- * Найти все кратчайшие циклы орграфа (not approved)
+ * Найти все кратчайшие циклы орграфа (not approved) 
  */
 void taskII_32() {
 	Graph graph;
 	graph.scan("taskII_32.txt");
+	graph.show();
 	vector<Vertex*> vertices = graph.vertices();
+	vector < vector <int> > cicles(0);
 
 	for (int i = 0; i < graph.size(); i++) {
 		queue<int> q;
@@ -147,11 +159,27 @@ void taskII_32() {
 			cicle.push_back(v);
 			v = parents[v];
 		}
-		cicle.push_back(vertices[i]->index);
-		for (int i = cicle.size() - 1; i >= 0; i--)
-			cout << cicle[i] << (!i? "" : " -> ");
+
+		
+		bool permutation = false;
+		for (int i = 0; i < cicles.size(); i++) {
+			if (isPermutation(cicle, cicles[i]))
+				permutation = true;
+		}
+
+		if (!permutation) {
+			cicles.push_back(cicle);
+		}
+	}
+
+	for (int i = 0; i < cicles.size(); i++) {
+		for (int j = cicles[i].size() - 1; j >= 0; j--) {
+			cout << cicles[i].at(j) << " -> ";
+		}
+		cout << cicles[i].at(cicles[i].size() - 1);
 		cout << endl;
 	}
+
 }
 
 /*
@@ -159,10 +187,13 @@ void taskII_32() {
  * Требуется найти в нем каркас минимального веса. Алгоритм Краскала.
  */
 void taskIII() {
-	/*NonOrGraph graph;
+
+	NonOrGraph graph;
 	graph.scan("taskIII.txt");
 	vector<Vertex*> vertices = graph.vertices();
 	vector <pair<int, pair<int, int>>> edges;
+
+
 
 	for (int i = 0; i < graph.size(); i++) {
 		for(map<Vertex*, int>::iterator it = graph[i]->adjMap.begin();
@@ -174,7 +205,6 @@ void taskIII() {
 		}
 	}
 	map<int, int> result;
-*/
 
 }
 
