@@ -98,26 +98,48 @@ void NonOrGraph::scan(string stringFileName) {
 	}
 }
 
+vector< pair<int, pair<int, int>> > NonOrGraph::edges() {
+
+	vector< pair<int, pair<int, int>> > edges(0);
+
+	for (int i = 0; i < vertexList.size(); i++) {
+		for(map<Vertex*, int>::iterator it = vertexList[i]->adjMap.begin();
+											it != vertexList[i]->adjMap.end();
+											it++)
+		{
+			int weight = it->second;
+			int from   = vertexList[i]->index;
+			int to     = it->first->index;
+			
+			bool exists = false;
+	
+			for (int i = 0; i < edges.size(); i++) {
+				if (edges[i].second.first == to && edges[i].second.second == from) {
+					exists = true;
+					break;
+				}
+			}
+
+			if (!exists) {
+				edges.push_back(make_pair(weight, make_pair(from, to)));
+			}
+		}
+	}
+
+	return edges;
+
+}
+
 void NonOrGraph::show() {
 
 	cout << endl;
-	map<int, char> used;
-	for (int i = 0; i < vertexList.size(); i++) {
-		if (vertexList[i]->adjMap.empty()) {
-			cout << vertexList[i]->index << " isolated";
-		}
-		for(map<Vertex*, int>::iterator it = vertexList[i]->adjMap.begin();
-										it != vertexList[i]->adjMap.end();
-										it++)
-		{
-			if (!used[it->first->index]) {
-				cout << vertexList[i]->index << " <--(" << it->second << ")--> " << it->first->index << endl;
-			}
-			used[it->first->index] = 1;
-		}
+	vector< pair<int, pair<int, int>> > edges = this->edges();
+	for (int i = 0; i < edges.size(); i++) {
+		cout << edges[i].second.first << " <--("
+			 << edges[i].first << ")--> "
+			 << edges[i].second.second << endl;
 	}
-	
-	cout << "\n\n";
+	cout << endl;
 
 }
 

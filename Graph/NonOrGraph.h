@@ -9,5 +9,7 @@ public:
 	bool isTree();
 	void show();
 	void scan(string fileName);
+	vector< pair<int, pair<int, int>> > edges();
 	int edgesNumber();										// количество ребер
+
 };

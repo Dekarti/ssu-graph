@@ -25,6 +25,8 @@ void taskIa_3() {
 		 << endl;
 }
 
+/******************************************************************************************/
+
 /*
  * Удалить из графа данную вершину
  */
@@ -45,6 +47,8 @@ void taskIa_25() {
 	graph.show();
 }
 
+/******************************************************************************************/
+
 /*
  * Вывести список смежности орграфа,
  * являющегося пересечением двух заданных.
@@ -55,6 +59,8 @@ void taskIb_6() {
 	Graph graph3 = intersection(graph1, graph2);
 	graph3.show();
 }
+
+/******************************************************************************************/
 
 /*
  * Выяснить, является ли орграф сильно связным.
@@ -93,6 +99,8 @@ void taskII_21() {
 	}
 	//cout << (foo ? "Yes\n" : "No\n");
 }
+
+/******************************************************************************************/
 
 map<int, int> BFS(Graph &graph, int start, queue<int> &q, map<int, char> &used) {
 	vector<int> cicle;
@@ -182,35 +190,99 @@ void taskII_32() {
 
 }
 
+/******************************************************************************************/
+
+bool comparator(pair<int, pair<int, int>> o1, pair<int, pair<int, int>> o2) {
+	
+	if (o1.first < o2.first)
+		return true;
+	else
+		return false;
+
+}
+
 /*
  * Дан взвешенный неориентированный граф из N вершин и M ребер.
  * Требуется найти в нем каркас минимального веса. Алгоритм Краскала.
- */
+ */ 
+
 void taskIII() {
 
 	NonOrGraph graph;
 	graph.scan("taskIII.txt");
 	graph.show();
 	vector<Vertex*> vertices = graph.vertices();
-	vector <pair<int, pair<int, int>>> edges;
+	vector <pair<int, pair<int, int>>> edges = graph.edges();
+	std::sort(edges.begin(), edges.end(), comparator);
 
+	vector< pair<int, pair<int, int>> > result;
 
-
+	vector<int> trees(graph.size());
 	for (int i = 0; i < graph.size(); i++) {
-		for(map<Vertex*, int>::iterator it = vertices[i]->adjMap.begin();
-										it != vertices[i]->adjMap.end();
-										it ++) {
-			edges.push_back(make_pair(
-					vertices[i]->index,
-					make_pair(it->first->index, it->second)
-				)
-			);
-		}
+		trees[i] = vertices[i]->index;
 	}
 
 	for (int i = 0; i < edges.size(); i++) {
-		cout << edges[i].first << "-" << edges[i].second.first <<  " | " << edges[i].second.second << endl;
+
+		int a = edges[i].second.first;
+		int b = edges[i].second.second;
+		int l = edges[i].first;
+
+		if (trees[a] != trees[b]) {
+			result.push_back(make_pair(l, make_pair(a, b)));
+			int oldID = trees[b];
+			int newID = trees[a];
+			for (int j = 0; j < graph.size(); ++j) {
+				if (trees[j] == oldID) {
+					trees[j] = newID;
+				}
+			}
+		}
 	}
+	
+	NonOrGraph mst; 
+	for (int i = 0; i < result.size(); i++) {
+		mst.addVertex(result[i].second.first);
+		mst.addVertex(result[i].second.second);
+		mst.addEdge(
+			result[i].second.first,
+			result[i].second.second,
+			result[i].first
+		);
+	}
+	mst.show();
+}
+
+/******************************************************************************************/
+
+vector< vector<int> > floid(NonOrGraph graph) {
+	vector<Vertex*> vertices = graph.vertices();
+	vector <pair<int, pair<int, int>>> edges = graph.edges();
+	vector< vector<int> > dimension(graph.size(), vector<int>(graph.size(), 5000));
+	
+	for (int i = 0; i < graph.size(); i++) {
+		dimension[i][i] = 0; 
+	}
+
+	for (int i = 0; i < edges.size(); i++) {
+		int a = edges[i].second.first;
+		int b = edges[i].second.second;
+		int l = edges[i].first;
+
+		dimension[a][b] = l;
+		dimension[b][a] = 1;
+	}
+
+	for (int i = 0; i < graph.size(); i++) {
+		for (int j = 0; j < graph.size(); j++) {
+			for (int k = 0; k < graph.size(); k++) {
+				dimension[i][j] = std::min(dimension[i][j], dimension[i][k] + dimension[k][j]);
+			}
+		}
+	}
+
+	return dimension;
+
 }
 
 /*
@@ -221,7 +293,33 @@ void taskIII() {
  *		a. В графе нет ребер отрицательного веса.
  *
  */
-void taskIV_11a() {}
+
+
+void taskIV_11a() {
+	NonOrGraph graph;
+	graph.scan("taskIV_11a.txt");
+	graph.show();
+	vector< vector<int> > dimension = floid(graph);
+	vector<int> eccentricitys(graph.size());
+
+	for (int i = 0; i < dimension.size(); i++) {
+		eccentricitys[i] = *max_element(dimension[i].begin(), dimension[i].end());
+	}
+
+	cout << "\n\n";
+
+	for (int i = 0; i < graph.size(); i++) {
+		cout << endl;
+		for (int j = 0; j < graph.size(); j++) {
+			cout << dimension[i][j] << "\t";
+		}
+		cout << " | " << eccentricitys[i];
+	}
+
+	cout << "\n\n";
+
+	cout << "Radius: " << *min_element(eccentricitys.begin(), eccentricitys.end()) << "\n\n\n";
+}
 
 /*
  * Вывести длины кратчайших путей от u до v1 и v2.
@@ -229,7 +327,9 @@ void taskIV_11a() {}
  *		b. В графе нет циклов отрицательного веса.
  *
  */
-void taskIV_4b() {}
+void taskIV_4b() {
+
+}
 
 /*
  * Вывести кратчайший путь из вершины u до вершины v.
@@ -237,7 +337,9 @@ void taskIV_4b() {}
  *		c. В графе могут быть циклы отрицательного веса.
  *
  */
-void taskIV_12c() {}
+void taskIV_12c() {
+
+}
 
 
 
