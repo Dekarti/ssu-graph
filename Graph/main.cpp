@@ -10,14 +10,15 @@ using namespace std;
 
 int main() {
 
-	/*taskIa_3();
-	taskIa_25();
-	taskIb_6();
-	taskII_14();*/
+	//taskIa_3();
+	//taskIa_25();
+	//taskIb_6();
+	//taskII_14();
 	//taskII_21();
 	//taskII_32();
 	//taskIII();
-	taskIV_11a();
+	//taskIV_11a();
+	taskIV_4b();
 
 	return 0;
 }

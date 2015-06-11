@@ -5,6 +5,8 @@
 #include "Graph.h"
 #include "Vertex.h"
 
+#define INF 10e6
+
 using namespace std;
 
 /*
@@ -256,12 +258,13 @@ void taskIII() {
 /******************************************************************************************/
 
 vector< vector<int> > floid(NonOrGraph graph) {
+
 	vector<Vertex*> vertices = graph.vertices();
 	vector <pair<int, pair<int, int>>> edges = graph.edges();
-	vector< vector<int> > dimension(graph.size(), vector<int>(graph.size(), 5000));
+	vector< vector<int> > distances(graph.size(), vector<int>(graph.size(), 5000));
 	
 	for (int i = 0; i < graph.size(); i++) {
-		dimension[i][i] = 0; 
+		distances[i][i] = 0; 
 	}
 
 	for (int i = 0; i < edges.size(); i++) {
@@ -269,19 +272,19 @@ vector< vector<int> > floid(NonOrGraph graph) {
 		int b = edges[i].second.second;
 		int l = edges[i].first;
 
-		dimension[a][b] = l;
-		dimension[b][a] = 1;
+		distances[a][b] = l;
+		distances[b][a] = 1;
 	}
 
 	for (int i = 0; i < graph.size(); i++) {
 		for (int j = 0; j < graph.size(); j++) {
 			for (int k = 0; k < graph.size(); k++) {
-				dimension[i][j] = std::min(dimension[i][j], dimension[i][k] + dimension[k][j]);
+				distances[i][j] = std::min(distances[i][j], distances[i][k] + distances[k][j]);
 			}
 		}
 	}
 
-	return dimension;
+	return distances;
 
 }
 
@@ -296,14 +299,15 @@ vector< vector<int> > floid(NonOrGraph graph) {
 
 
 void taskIV_11a() {
+
 	NonOrGraph graph;
 	graph.scan("taskIV_11a.txt");
 	graph.show();
-	vector< vector<int> > dimension = floid(graph);
+	vector< vector<int> > distances = floid(graph);
 	vector<int> eccentricitys(graph.size());
 
-	for (int i = 0; i < dimension.size(); i++) {
-		eccentricitys[i] = *max_element(dimension[i].begin(), dimension[i].end());
+	for (int i = 0; i < distances.size(); i++) {
+		eccentricitys[i] = *max_element(distances[i].begin(), distances[i].end());
 	}
 
 	cout << "\n\n";
@@ -311,7 +315,7 @@ void taskIV_11a() {
 	for (int i = 0; i < graph.size(); i++) {
 		cout << endl;
 		for (int j = 0; j < graph.size(); j++) {
-			cout << dimension[i][j] << "\t";
+			cout << distances[i][j] << "\t";
 		}
 		cout << " | " << eccentricitys[i];
 	}
@@ -319,6 +323,56 @@ void taskIV_11a() {
 	cout << "\n\n";
 
 	cout << "Radius: " << *min_element(eccentricitys.begin(), eccentricitys.end()) << "\n\n\n";
+
+}
+
+/******************************************************************************************/
+
+map<int, int> dijkstra(int start, NonOrGraph graph) {
+	
+	map<int, int> distances;
+	vector<Vertex*> vertices = graph.vertices();
+
+	for (int i = 0; i < vertices.size(); i++) {
+		distances.insert(make_pair(vertices[i]->index, INF));
+	}
+
+	map<int, bool> used;
+
+	for (int i = 0; i < vertices.size(); i++) {
+		used.insert(make_pair(vertices[i]->index, false));
+	}
+
+
+	distances[start] = 0;
+
+	for (int i = 0; i < graph.size(); i++) {
+
+		int v = -1;
+
+		for (int j = 0; j < graph.size(); j++) {
+			if (!used[j] && (v == -1 || distances[j] < distances[v])) {
+				v = j;
+			}
+		}
+
+		used[v] = true;
+ 
+		for(map<Vertex*, int>::iterator it = graph[v]->adjMap.begin();
+										it != graph[v]->adjMap.end();
+										it ++)
+		{
+			int to = it->first->index;
+			int len = it->second;
+
+			if (distances[v] + len < distances[to]) {
+				distances[to] = distances[v] + len;
+			}
+		}
+	}
+
+	return distances;
+
 }
 
 /*
@@ -329,6 +383,21 @@ void taskIV_11a() {
  */
 void taskIV_4b() {
 
+	NonOrGraph graph;
+	graph.scan("taskIV_4b.txt");
+	graph.show();
+
+	int u; cout << " u = "; cin >> u;
+
+	int v1, v2;
+	cout << " v1 = "; cin >> v1; 
+	cout << " v2 = "; cin >> v2;
+
+	map<int, int> distances = dijkstra(u, graph);
+
+	cout << " " << u << " -> " << v1 << " = " << distances[v1] << endl;
+	cout << " " << u << " -> " << v2 << " = " << distances[v2] << endl;
+	
 }
 
 /*
